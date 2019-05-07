@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float moveSpeed;
 	private Rigidbody2D myRigidbody;
 
+
 	public float jumpSpeed;
 
 	public Transform groundCheck;
@@ -15,9 +16,12 @@ public class PlayerController : MonoBehaviour {
 
 	public bool isGrounded;
 
+	private Animator myAnim;
+
 	// Use this for initialization
 	void Start () {
 		myRigidbody = GetComponent<Rigidbody2D>();
+		myAnim = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
@@ -40,5 +44,8 @@ public class PlayerController : MonoBehaviour {
 		{
 			myRigidbody.velocity = new Vector3 (myRigidbody.velocity.x, jumpSpeed, 0f);
 		}
+
+		myAnim.SetFloat ("Speed", Mathf.Abs (myRigidbody.velocity.x));
+		myAnim.SetBool ("Grounded", isGrounded);
 	}
 }
