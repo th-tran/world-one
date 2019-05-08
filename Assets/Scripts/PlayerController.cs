@@ -5,10 +5,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour {
 
 	public float moveSpeed;
-	private Rigidbody2D myRigidbody;
-
-
 	public float jumpSpeed;
+	public float moveInput;
+	private Rigidbody2D myRigidbody;
 
 	public Transform groundCheck;
 	public float groundCheckRadius;
@@ -18,33 +17,22 @@ public class PlayerController : MonoBehaviour {
 
 	private Animator myAnim;
 
-	// Use this for initialization
 	void Start () {
 		myRigidbody = GetComponent<Rigidbody2D>();
 		myAnim = GetComponent<Animator>();
 	}
 	
-	// Update is called once per frame
-	void Update () {
-
-		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-
-		if (Input.GetAxisRaw ("Horizontal") > 0f)
-		{
-			myRigidbody.velocity = new Vector3 (moveSpeed, myRigidbody.velocity.y, 0f);
-			transform.localScale = new Vector3 (1f, 1f, 1f);
-		} else if (Input.GetAxisRaw ("Horizontal") < 0f)
-		{
-			myRigidbody.velocity = new Vector3 (-moveSpeed, myRigidbody.velocity.y, 0f);
-			transform.localScale = new Vector3 (-1f, 1f, 1f);
-		} else 
-		{
-			myRigidbody.velocity = new Vector3 (0f, myRigidbody.velocity.y, 0f);
+	void FixedUpdate () {
+        moveInput = Input.GetAxisRaw ("Horizontal");
+		myRigidbody.velocity = new Vector2 (moveInput * moveSpeed, myRigidbody.velocity.y);
+		if (moveInput != 0f) {
+			transform.localScale = new Vector2 (moveInput * 1f, 1f);
 		}
 
+		isGrounded = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
 		if (Input.GetButtonDown ("Jump") && isGrounded)
 		{
-			myRigidbody.velocity = new Vector3 (myRigidbody.velocity.x, jumpSpeed, 0f);
+			myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpSpeed);
 		}
 
 		myAnim.SetFloat ("Speed", Mathf.Abs (myRigidbody.velocity.x));
