@@ -34,7 +34,8 @@ public class PlayerController : MonoBehaviour {
 		// Move player left or right (or not at all) based on input
         moveInput = Input.GetAxisRaw ("Horizontal");
 		myRigidbody.velocity = new Vector2 (moveInput * moveSpeed, myRigidbody.velocity.y);
-		if (moveInput != 0f) {
+		if (moveInput != 0f) 
+		{
 			// Turn the direction the player is facing based on input
 			transform.localScale = new Vector2 (moveInput * 1f, 1f);
 		}
@@ -62,7 +63,8 @@ public class PlayerController : MonoBehaviour {
 		}
 
 		// Player can only jump once
-		if (Input.GetButtonUp ("Jump")) {
+		if (Input.GetButtonUp ("Jump")) 
+		{
 			isJumping = false;
 		}
 
