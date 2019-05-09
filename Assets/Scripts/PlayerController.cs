@@ -24,10 +24,16 @@ public class PlayerController : MonoBehaviour {
 	// Controls player animations
 	private Animator myAnim;
 
+	// Player respawns here after death
+	public Vector2 respawnPosition;
+
 	void Start () {
 		// Get the rigidbody and animator of player
 		myRigidbody = GetComponent<Rigidbody2D>();
 		myAnim = GetComponent<Animator>();
+
+		// Set initial respawn position to start of level
+		respawnPosition = transform.position;
 	}
 	
 	void Update () {
@@ -76,7 +82,14 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
 		{
-			gameObject.SetActive (false);
+			//gameObject.SetActive (false);
+			transform.position = respawnPosition;
+		}
+
+		if (other.tag == "Checkpoint")
+		{
+			// Update respawn position
+			respawnPosition = other.transform.position;
 		}
 	}
 }
