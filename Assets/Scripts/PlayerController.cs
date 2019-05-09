@@ -9,11 +9,17 @@ public class PlayerController : MonoBehaviour {
 	public float jumpForce;
 	public float moveInput;
 	private Rigidbody2D myRigidbody;
+	private BoxCollider2D myBoxCollider;
 
 	// Controls jumping
 	private float jumpTimeCounter;
 	public float jumpTime;
-	private bool isJumping;
+	public bool isJumping;
+
+	// Controls crouching
+	private bool downPressed;
+	private bool downLetGo;
+	public bool isCrouching;
 
 	// Ground check
 	public Transform feetPos;
@@ -32,6 +38,7 @@ public class PlayerController : MonoBehaviour {
 	void Start () {
 		// Get the rigidbody and animator of player
 		myRigidbody = GetComponent<Rigidbody2D>();
+		myBoxCollider = GetComponent<BoxCollider2D>();
 		myAnim = GetComponent<Animator>();
 
 		// Set initial respawn position to start of level
@@ -39,12 +46,16 @@ public class PlayerController : MonoBehaviour {
 
 		// Get reference to level manager
 		theLevelManager = FindObjectOfType<LevelManager>();
+
+		isJumping = false;
+		isCrouching = false;
 	}
 	
 	void Update () {
 		// Move player left or right (or not at all) based on input
         moveInput = Input.GetAxisRaw ("Horizontal");
 		myRigidbody.velocity = new Vector2 (moveInput * moveSpeed, myRigidbody.velocity.y);
+
 		if (moveInput != 0f) 
 		{
 			// Turn the direction the player is facing based on input
@@ -79,9 +90,33 @@ public class PlayerController : MonoBehaviour {
 			isJumping = false;
 		}
 
+		downPressed = (Input.GetButton ("Vertical") && (Input.GetAxisRaw ("Vertical") < 0f));
+		if (downPressed)
+		{
+			isCrouching = true;
+			if (isGrounded)
+			{
+				myRigidbody.velocity = new Vector2 (0f, myRigidbody.velocity.y);
+			}
+			ResizePlayer(0.7f);
+		}
+		downLetGo = (Input.GetButtonUp ("Vertical") && (Input.GetAxisRaw ("Vertical") >= 0f));
+		if (downLetGo)
+		{
+			isCrouching = false;
+			ResizePlayer(0.9f);
+		}
+
 		// Set animations based on player values
 		myAnim.SetFloat ("Speed", Mathf.Abs (myRigidbody.velocity.x));
 		myAnim.SetBool ("Grounded", isGrounded);
+		myAnim.SetBool ("Crouching", isCrouching);
+	}
+
+	void ResizePlayer (float newY) {
+		Vector2 size = myBoxCollider.size;
+		size.y = newY;
+		myBoxCollider.size = size;
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
@@ -95,6 +130,20 @@ public class PlayerController : MonoBehaviour {
 		{
 			// Update respawn position
 			respawnPosition = other.transform.position;
+		}
+	}
+
+	void OnCollisionEnter2D (Collision2D other) {
+		if (other.gameObject.tag == "MovingPlatform")
+		{
+			transform.parent = other.transform;
+		}
+	}
+
+	void OnCollisionExit2D (Collision2D other) {
+		if (other.gameObject.tag == "MovingPlatform")
+		{
+			transform.parent = null;
 		}
 	}
 }

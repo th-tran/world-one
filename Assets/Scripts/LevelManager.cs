@@ -29,6 +29,8 @@ public class LevelManager : MonoBehaviour {
 
 		// Re-activate player
 		thePlayer.transform.position = thePlayer.respawnPosition;
+		thePlayer.isJumping = false;
+		thePlayer.isCrouching = false;
 		thePlayer.gameObject.SetActive (true);
 	}
 }
