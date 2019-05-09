@@ -27,6 +27,8 @@ public class PlayerController : MonoBehaviour {
 	// Player respawns here after death
 	public Vector2 respawnPosition;
 
+	public LevelManager theLevelManager;
+
 	void Start () {
 		// Get the rigidbody and animator of player
 		myRigidbody = GetComponent<Rigidbody2D>();
@@ -34,6 +36,9 @@ public class PlayerController : MonoBehaviour {
 
 		// Set initial respawn position to start of level
 		respawnPosition = transform.position;
+
+		// Get reference to level manager
+		theLevelManager = FindObjectOfType<LevelManager>();
 	}
 	
 	void Update () {
@@ -82,8 +87,8 @@ public class PlayerController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
 		{
-			//gameObject.SetActive (false);
-			transform.position = respawnPosition;
+			// Player dies and respawns
+			theLevelManager.Respawn();
 		}
 
 		if (other.tag == "Checkpoint")
