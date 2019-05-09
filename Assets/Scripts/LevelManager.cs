@@ -5,6 +5,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour {
 
 	public PlayerController thePlayer;
+	public GameObject deathSplosion;
 	public float waitForRespawn;
 
 	void Start () {
@@ -19,6 +20,9 @@ public class LevelManager : MonoBehaviour {
 	public IEnumerator RespawnCo () {
 		// Deactivate player
 		thePlayer.gameObject.SetActive (false);
+
+		// YOU DIED
+		Instantiate (deathSplosion, thePlayer.transform.position, thePlayer.transform.rotation);
 
 		// Pause between death and respawn
 		yield return new WaitForSeconds (waitForRespawn);
