@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
 	// Player respawns here after death
 	public Vector2 respawnPosition;
 
-	public LevelManager theLevelManager;
+	private LevelManager theLevelManager;
 
 	void Start () {
 		// Get the rigidbody and animator of player

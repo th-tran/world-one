@@ -8,7 +8,10 @@ public class LevelManager : MonoBehaviour {
 	public GameObject deathSplosion;
 	public float waitForRespawn;
 
+	public int coinCount;
+
 	void Start () {
+		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
 	}
 
@@ -32,5 +35,9 @@ public class LevelManager : MonoBehaviour {
 		thePlayer.isJumping = false;
 		thePlayer.isCrouching = false;
 		thePlayer.gameObject.SetActive (true);
+	}
+
+	public void AddCoins (int coinsToAdd) {
+		coinCount += coinsToAdd;
 	}
 }
