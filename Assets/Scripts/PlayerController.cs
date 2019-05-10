@@ -18,7 +18,6 @@ public class PlayerController : MonoBehaviour {
 
 	// Controls crouching
 	private bool downPressed;
-	private bool downLetGo;
 	public bool isCrouching;
 
 	// Ground check
@@ -90,6 +89,7 @@ public class PlayerController : MonoBehaviour {
 			isJumping = false;
 		}
 
+		// Check if player is crouching
 		downPressed = (Input.GetButton ("Vertical") && (Input.GetAxisRaw ("Vertical") < 0f));
 		if (downPressed)
 		{
@@ -99,9 +99,7 @@ public class PlayerController : MonoBehaviour {
 				myRigidbody.velocity = new Vector2 (0f, myRigidbody.velocity.y);
 			}
 			ResizePlayer(0.7f);
-		}
-		if (!downPressed)
-		{
+		} else {
 			isCrouching = false;
 			ResizePlayer(0.9f);
 		}
@@ -135,6 +133,7 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionEnter2D (Collision2D other) {
 		if (other.gameObject.tag == "MovingPlatform")
 		{
+			// Things become "attached" to the moving platform until they leave contact
 			transform.parent = other.transform;
 		}
 	}
@@ -142,6 +141,7 @@ public class PlayerController : MonoBehaviour {
 	void OnCollisionExit2D (Collision2D other) {
 		if (other.gameObject.tag == "MovingPlatform")
 		{
+			// Remove attachment to moving platform
 			transform.parent = null;
 		}
 	}
