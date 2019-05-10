@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour {
 	public float moveInput;
 	private Rigidbody2D myRigidbody;
 	private BoxCollider2D myBoxCollider;
+	private SpriteRenderer sprite;
 
 	// Controls jumping
 	private float jumpTimeCounter;
@@ -55,10 +56,12 @@ public class PlayerController : MonoBehaviour {
         moveInput = Input.GetAxisRaw ("Horizontal");
 		myRigidbody.velocity = new Vector2 (moveInput * moveSpeed, myRigidbody.velocity.y);
 
-		if (moveInput != 0f) 
+		// Turn the direction the player is facing based on input
+		if (moveInput > 0f) 
 		{
-			// Turn the direction the player is facing based on input
-			transform.localScale = new Vector2 (moveInput * 1f, 1f);
+			transform.eulerAngles = new Vector3 (0f, 0f, 0f);
+		} else if (moveInput < 0f) {
+			transform.eulerAngles = new Vector3 (0f, 180f, 0f);
 		}
 
 		// Allow jumping only if player jumps from ground
