@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
@@ -10,9 +11,14 @@ public class LevelManager : MonoBehaviour {
 
 	public int coinCount;
 
+	public Text coinText;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
+
+		// Initialize coin UI
+		coinText.text = "X " + coinCount;
 	}
 
 	public void Respawn () {
@@ -38,6 +44,9 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void AddCoins (int coinsToAdd) {
+		// Update coin count
 		coinCount += coinsToAdd;
+		// Update coin UI
+		coinText.text = "X " + coinCount;
 	}
 }
