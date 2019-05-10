@@ -41,6 +41,7 @@ public class LevelManager : MonoBehaviour {
 
 	public void Respawn () {
 		// Separate respawn into its own event while time continues
+		healthCount = 0;
 		StartCoroutine("RespawnCo");
 	}
 

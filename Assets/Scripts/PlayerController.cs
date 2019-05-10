@@ -121,6 +121,7 @@ public class PlayerController : MonoBehaviour {
 		{
 			// Player dies and respawns
 			theLevelManager.Respawn();
+			theLevelManager.UpdateHeartMeter();
 		}
 
 		if (other.tag == "Checkpoint")
