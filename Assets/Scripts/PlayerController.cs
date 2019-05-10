@@ -100,8 +100,7 @@ public class PlayerController : MonoBehaviour {
 			}
 			ResizePlayer(0.7f);
 		}
-		downLetGo = (Input.GetButtonUp ("Vertical") && (Input.GetAxisRaw ("Vertical") >= 0f));
-		if (downLetGo)
+		if (!downPressed)
 		{
 			isCrouching = false;
 			ResizePlayer(0.9f);
