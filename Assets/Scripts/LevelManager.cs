@@ -56,11 +56,13 @@ public class LevelManager : MonoBehaviour {
 
 		// Refresh health to full
 		healthCount = maxHealth;
+		UpdateHeartMeter();
 
 		// Re-activate player
 		thePlayer.transform.position = thePlayer.respawnPosition;
 		thePlayer.isJumping = false;
 		thePlayer.isCrouching = false;
+		thePlayer.transform.localScale = new Vector2 (1f, 1f);
 		thePlayer.gameObject.SetActive (true);
 		respawning = false;
 	}
@@ -75,5 +77,34 @@ public class LevelManager : MonoBehaviour {
 	public void HurtPlayer (int damageToTake) {
 		// Lose health equal to damage taken
 		healthCount -= damageToTake;
+		UpdateHeartMeter();
+	}
+
+	public void UpdateHeartMeter () {
+		switch (healthCount)
+		{
+			case 6: heart1.sprite = heart2.sprite = heart3.sprite = heartFull;
+					return;
+			case 5: heart1.sprite = heart2.sprite = heartFull;
+					heart3.sprite = heartHalf;
+					return;
+			case 4: heart1.sprite = heart2.sprite = heartFull;
+					heart3.sprite = heartEmpty;
+					return;
+			case 3: heart1.sprite = heartFull;
+					heart2.sprite = heartHalf;
+					heart3.sprite = heartEmpty;
+					return;
+			case 2: heart1.sprite = heartFull;
+					heart2.sprite = heart3.sprite = heartEmpty;
+					return;
+			case 1: heart1.sprite = heartHalf;
+					heart2.sprite = heart3.sprite = heartEmpty;
+					return;
+			case 0: heart1.sprite = heart2.sprite = heart3.sprite = heartEmpty;
+					return;
+			default: heart1.sprite = heart2.sprite = heart3.sprite = heartEmpty;
+					 return;
+		}
 	}
 }
