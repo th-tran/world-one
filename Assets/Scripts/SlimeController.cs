@@ -27,7 +27,8 @@ public class SlimeController : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
 		{
-			Destroy (gameObject);
+			//Destroy (gameObject);
+			gameObject.SetActive (false);
 		}
 	}
 }

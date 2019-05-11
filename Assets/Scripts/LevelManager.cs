@@ -20,6 +20,8 @@ public class LevelManager : MonoBehaviour {
 
 	private bool respawning;
 
+	public ResetOnRespawn[] objectsToReset;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
@@ -29,6 +31,9 @@ public class LevelManager : MonoBehaviour {
 
 		// Initialize health
 		healthCount = maxHealth;
+
+		// Initialize all objects to reset on respawn
+		objectsToReset = FindObjectsOfType<ResetOnRespawn>();
 	}
 
 	void Update () {
@@ -66,6 +71,16 @@ public class LevelManager : MonoBehaviour {
 		thePlayer.transform.localScale = new Vector2 (1f, 1f);
 		thePlayer.gameObject.SetActive (true);
 		respawning = false;
+
+		// Lose all coins
+		coinCount = 0;
+
+		// BITE ZA DUSTU
+		for (int i = 0; i < objectsToReset.Length; i++)
+		{
+			objectsToReset[i].gameObject.SetActive (true);
+			objectsToReset[i].ResetObject();
+		}
 	}
 
 	public void AddCoins (int coinsToAdd) {

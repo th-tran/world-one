@@ -16,7 +16,8 @@ public class StompEnemy : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Enemy")
 		{
-			Destroy (other.gameObject);
+			//Destroy (other.gameObject);
+			other.gameObject.SetActive (false);
 			//Instantiate (deathSplosion, other.transform.position, other.transform.rotation);
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, bounceForce);
 		}
