@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
 	// Controls player behaviour
 	public PlayerController thePlayer;
 	public GameObject deathSplosion;
+	public float waitForDeath;
 	public float waitForRespawn;
 
 	// Controls coin behaviour
@@ -84,12 +85,16 @@ public class LevelManager : MonoBehaviour {
 			StartCoroutine("RespawnCo");
 		} else {
 			// Big oof
-			thePlayer.gameObject.SetActive (false);
-			gameOverScreen.SetActive (true);
+			StartCoroutine("GameOverCo");
 		}
 	}
 
 	public IEnumerator RespawnCo () {
+		// ZA WARUDO
+		Time.timeScale = 0f;
+		yield return new WaitForSecondsRealtime (waitForDeath);
+		Time.timeScale = 1f;
+
 		// Deactivate player
 		thePlayer.gameObject.SetActive (false);
 
@@ -122,6 +127,20 @@ public class LevelManager : MonoBehaviour {
 			objectsToReset[i].gameObject.SetActive (true);
 			objectsToReset[i].ResetObject();
 		}
+	}
+
+	public IEnumerator GameOverCo () {
+		// Freeze and delay before death
+		Time.timeScale = 0f;
+		yield return new WaitForSecondsRealtime (waitForDeath);
+		Time.timeScale = 1f;
+
+		// Player dies
+		thePlayer.gameObject.SetActive (false);
+		Instantiate (deathSplosion, thePlayer.transform.position, thePlayer.transform.rotation);
+
+		// Game over
+		gameOverScreen.SetActive (true);
 	}
 
 	public void AddCoins (int coinsToAdd) {
