@@ -95,11 +95,11 @@ public class LevelManager : MonoBehaviour {
 		yield return new WaitForSecondsRealtime (waitForDeath);
 		Time.timeScale = 1f;
 
-		// Deactivate player
-		thePlayer.gameObject.SetActive (false);
-
 		// YOU DIED
 		Instantiate (deathSplosion, thePlayer.transform.position, thePlayer.transform.rotation);
+
+		// Deactivate player
+		thePlayer.gameObject.SetActive (false);
 
 		// Pause between death and respawn
 		yield return new WaitForSeconds (waitForRespawn);
@@ -136,8 +136,8 @@ public class LevelManager : MonoBehaviour {
 		Time.timeScale = 1f;
 
 		// Player dies
-		thePlayer.gameObject.SetActive (false);
 		Instantiate (deathSplosion, thePlayer.transform.position, thePlayer.transform.rotation);
+		thePlayer.gameObject.SetActive (false);
 
 		// Game over
 		gameOverScreen.SetActive (true);
