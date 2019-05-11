@@ -24,6 +24,10 @@ public class SlimeController : MonoBehaviour {
 		canMove = true;
 	}
 
+	void onEnable () {
+		canMove = false;
+	}
+
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
 		{
