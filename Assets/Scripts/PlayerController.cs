@@ -49,6 +49,9 @@ public class PlayerController : MonoBehaviour {
 	public float invincibilityLength;
 	private float invincibilityCounter;
 
+	// Player sound effects
+	public AudioSource jumpSound;
+
 	void Start () {
 		// Get player components
 		myRigidbody = GetComponent<Rigidbody2D>();
@@ -85,6 +88,7 @@ public class PlayerController : MonoBehaviour {
 				isJumping = true;
 				jumpTimeCounter = jumpTime;
 				myRigidbody.velocity = new Vector2 (myRigidbody.velocity.x, jumpForce);
+				jumpSound.Play();
 			}
 
 			// As long as player holds jump button
