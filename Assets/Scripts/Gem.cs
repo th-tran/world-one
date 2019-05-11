@@ -19,6 +19,8 @@ public class Gem : MonoBehaviour {
 		}
 		gameObject.SetActive (false);
 		theLevelManager.levelCompleteScreen.SetActive (true);
-		GameObject.Find("Player").GetComponent<PlayerController>().enabled = false;
+		GameObject player = GameObject.Find("Player");
+		player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+		player.GetComponent<PlayerController>().enabled = false;
 	}
 }
