@@ -8,25 +8,31 @@ public class SlimeController : MonoBehaviour {
 	private bool canMove;
 	private Rigidbody2D myRigidbody;
 
+	// Player check
+	public float aggroRadius;
+	public LayerMask whatIsPlayer;
+
 	void Start () {
 		myRigidbody = GetComponent<Rigidbody2D>();
 		canMove = false;
 	}
 	
 	void Update () {
+		// Move if in range of Player
+		canMove = Physics2D.OverlapCircle (transform.position, aggroRadius, whatIsPlayer);
 		if (canMove)
 		{
 			myRigidbody.velocity = new Vector2 (-moveSpeed, myRigidbody.velocity.y);
 		}
 	}
 
-	void OnBecameVisible () {
+	/*void OnBecameVisible () {
 		canMove = true;
 	}
 
 	void OnEnable () {
 		canMove = false;
-	}
+	}*/
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
