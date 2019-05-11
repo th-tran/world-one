@@ -183,6 +183,10 @@ public class PlayerController : MonoBehaviour {
 		theLevelManager.invincible = true;
 	}
 
+	public void StopMovement () {
+		myRigidbody.velocity = Vector2.zero;
+	}
+
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "KillPlane")
 		{

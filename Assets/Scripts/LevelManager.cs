@@ -212,4 +212,10 @@ public class LevelManager : MonoBehaviour {
 					 return;
 		}
 	}
+
+	public void EndLevel () {
+		levelCompleteScreen.SetActive (true);
+		thePlayer.StopMovement();
+		thePlayer.enabled = false;
+	}
 }
