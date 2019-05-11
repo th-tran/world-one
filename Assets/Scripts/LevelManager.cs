@@ -29,6 +29,7 @@ public class LevelManager : MonoBehaviour {
 	public Text livesText;
 
 	public GameObject gameOverScreen;
+	public GameObject levelCompleteScreen;
 
 	void Start () {
 		// Get reference to PlayerController
@@ -125,6 +126,15 @@ public class LevelManager : MonoBehaviour {
 			UpdateHeartMeter();
 			thePlayer.Knockback();
 		}
+	}
+
+	public void GiveHealth (int healthToGive) {
+		healthCount += healthToGive;
+		if (healthCount > maxHealth)
+		{
+			healthCount = maxHealth;
+		}
+		UpdateHeartMeter();
 	}
 
 	public void UpdateHeartMeter () {
