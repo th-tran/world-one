@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour {
 
 	public ResetOnRespawn[] objectsToReset;
 
+	public bool invincible;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
@@ -92,9 +94,12 @@ public class LevelManager : MonoBehaviour {
 
 	public void HurtPlayer (int damageToTake) {
 		// Lose health equal to damage taken
-		healthCount -= damageToTake;
-		UpdateHeartMeter();
-		thePlayer.Knockback();
+		if (!invincible)
+		{
+			healthCount -= damageToTake;
+			UpdateHeartMeter();
+			thePlayer.Knockback();
+		}
 	}
 
 	public void UpdateHeartMeter () {

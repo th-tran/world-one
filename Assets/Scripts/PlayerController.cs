@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour {
 	public float knockbackLength;
 	private float knockbackCounter;
 
+	public float invincibilityLength;
+	private float invincibilityCounter;
+
 	void Start () {
 		// Get the rigidbody and animator of player
 		myRigidbody = GetComponent<Rigidbody2D>();
@@ -128,6 +131,16 @@ public class PlayerController : MonoBehaviour {
 			}
 		}
 
+		if (invincibilityCounter > 0)
+		{
+			invincibilityCounter -= Time.deltaTime;
+		}
+
+		if (invincibilityCounter <= 0)
+		{
+			theLevelManager.invincible = false;
+		}
+
 		if (myRigidbody.velocity.y < 0)
 		{
 			stompBox.SetActive (true);
@@ -149,6 +162,8 @@ public class PlayerController : MonoBehaviour {
 
 	public void Knockback () {
 		knockbackCounter = knockbackLength;
+		invincibilityCounter = invincibilityLength;
+		theLevelManager.invincible = true;
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
