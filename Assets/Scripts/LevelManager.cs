@@ -28,6 +28,8 @@ public class LevelManager : MonoBehaviour {
 	public int currentLives;
 	public Text livesText;
 
+	public GameObject gameOverScreen;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
@@ -65,6 +67,7 @@ public class LevelManager : MonoBehaviour {
 		} else {
 			// Big oof
 			thePlayer.gameObject.SetActive (false);
+			gameOverScreen.SetActive (true);
 		}
 	}
 
