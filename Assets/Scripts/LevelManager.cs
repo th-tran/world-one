@@ -109,6 +109,11 @@ public class LevelManager : MonoBehaviour {
 		coinText.text = "X " + coinCount;
 	}
 
+	public void AddLives (int livesToAdd) {
+		currentLives += livesToAdd;
+		livesText.text = "X " + currentLives;
+	}
+
 	public void HurtPlayer (int damageToTake) {
 		// Lose health equal to damage taken
 		if (!invincible)
