@@ -12,6 +12,8 @@ public class LevelManager : MonoBehaviour {
 
 	// Controls coin behaviour
 	public int coinCount;
+	private int coinBonusLifeCount;
+	public int bonusLifeThreshold;
 	public Text coinText;
 
 	// Health UI
@@ -63,6 +65,13 @@ public class LevelManager : MonoBehaviour {
 			Respawn();
 			respawning = true;
 		}
+		// Check if player has enough coins for bonus
+		if (coinBonusLifeCount >= bonusLifeThreshold)
+		{
+			currentLives += 1;
+			livesText.text = "X " + currentLives;
+			coinBonusLifeCount -= bonusLifeThreshold;
+		}
 	}
 
 	public void Respawn () {
@@ -104,6 +113,7 @@ public class LevelManager : MonoBehaviour {
 
 		// Lose all coins
 		coinCount = 0;
+		coinBonusLifeCount = 0;
 		coinText.text = "X " + coinCount;
 
 		// BITE ZA DUSTU
@@ -117,6 +127,7 @@ public class LevelManager : MonoBehaviour {
 	public void AddCoins (int coinsToAdd) {
 		// Update coin count and UI
 		coinCount += coinsToAdd;
+		coinBonusLifeCount += coinsToAdd;
 		coinText.text = "X " + coinCount;
 	}
 
