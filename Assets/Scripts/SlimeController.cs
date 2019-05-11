@@ -24,7 +24,7 @@ public class SlimeController : MonoBehaviour {
 		canMove = true;
 	}
 
-	void onEnable () {
+	void OnEnable () {
 		canMove = false;
 	}
 
