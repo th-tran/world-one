@@ -16,13 +16,13 @@ public class Gem : MonoBehaviour {
 		if (other.tag == "Player")
 		{
 			Instantiate (gemBurst, transform.position, transform.rotation);
-		}
-		gameObject.SetActive (false);
+			gameObject.SetActive (false);
 
-		// Placeholder wincon
-		theLevelManager.levelCompleteScreen.SetActive (true);
-		GameObject player = GameObject.Find("Player");
-		player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-		player.GetComponent<PlayerController>().enabled = false;
+			// Placeholder wincon
+			theLevelManager.levelCompleteScreen.SetActive (true);
+			GameObject player = GameObject.Find("Player");
+			player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+			player.GetComponent<PlayerController>().enabled = false;
+		}
 	}
 }
