@@ -61,9 +61,9 @@ public class PlayerController : MonoBehaviour {
 		// Turn the direction the player is facing based on input
 		if (moveInput > 0f) 
 		{
-			transform.eulerAngles = new Vector3 (0f, 0f, 0f);
+			transform.localScale = new Vector2 (1f, 1f);
 		} else if (moveInput < 0f) {
-			transform.eulerAngles = new Vector3 (0f, 180f, 0f);
+			transform.localScale = new Vector2 (-1f, 1f);
 		}
 
 		// Allow jumping only if player jumps from ground
