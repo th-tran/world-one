@@ -42,6 +42,11 @@ public class LevelManager : MonoBehaviour {
 	public GameObject gameOverScreen;
 	public GameObject levelCompleteScreen;
 
+	// Game music
+	public AudioSource levelMusic;
+	public AudioSource gameOverMusic;
+	public float gameOverTransition;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
@@ -92,6 +97,7 @@ public class LevelManager : MonoBehaviour {
 
 	public IEnumerator RespawnCo () {
 		// ZA WARUDO
+		levelMusic.Stop();
 		Time.timeScale = 0f;
 		yield return new WaitForSecondsRealtime (waitForDeath);
 		Time.timeScale = 1f;
@@ -128,6 +134,7 @@ public class LevelManager : MonoBehaviour {
 			objectsToReset[i].gameObject.SetActive (true);
 			objectsToReset[i].ResetObject();
 		}
+		levelMusic.Play();
 	}
 
 	public IEnumerator GameOverCo () {
@@ -142,6 +149,9 @@ public class LevelManager : MonoBehaviour {
 
 		// Game over
 		gameOverScreen.SetActive (true);
+		levelMusic.Stop();
+		yield return new WaitForSeconds (gameOverTransition);
+		gameOverMusic.Play();
 	}
 
 	public void AddCoins (int coinsToAdd) {
@@ -217,5 +227,6 @@ public class LevelManager : MonoBehaviour {
 		levelCompleteScreen.SetActive (true);
 		thePlayer.StopMovement();
 		thePlayer.enabled = false;
+		levelMusic.volume /= 2f;
 	}
 }
