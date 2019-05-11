@@ -170,7 +170,7 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "KillPlane")
 		{
 			// Player dies and respawns
-			theLevelManager.Respawn();
+			theLevelManager.healthCount = 0;
 			theLevelManager.UpdateHeartMeter();
 		}
 

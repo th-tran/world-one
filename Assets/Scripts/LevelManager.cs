@@ -24,15 +24,23 @@ public class LevelManager : MonoBehaviour {
 
 	public bool invincible;
 
+	public int startingLives;
+	public int currentLives;
+	public Text livesText;
+
 	void Start () {
 		// Get reference to PlayerController
 		thePlayer = FindObjectOfType<PlayerController>();
 
-		// Initialize coin UI
-		coinText.text = "X " + coinCount;
-
 		// Initialize health
 		healthCount = maxHealth;
+
+		// Initialize coins
+		coinText.text = "X " + coinCount;
+
+		// Initialize lives
+		currentLives = startingLives;
+		livesText.text = "X " + currentLives;
 
 		// Initialize all objects to reset on respawn
 		objectsToReset = FindObjectsOfType<ResetOnRespawn>();
@@ -49,7 +57,15 @@ public class LevelManager : MonoBehaviour {
 	public void Respawn () {
 		// Separate respawn into its own event while time continues
 		healthCount = 0;
-		StartCoroutine("RespawnCo");
+		currentLives -= 1;
+		livesText.text = "X " + currentLives;
+		if (currentLives > 0)
+		{	// Next time for sure
+			StartCoroutine("RespawnCo");
+		} else {
+			// Big oof
+			thePlayer.gameObject.SetActive (false);
+		}
 	}
 
 	public IEnumerator RespawnCo () {
@@ -76,6 +92,7 @@ public class LevelManager : MonoBehaviour {
 
 		// Lose all coins
 		coinCount = 0;
+		coinText.text = "X " + coinCount;
 
 		// BITE ZA DUSTU
 		for (int i = 0; i < objectsToReset.Length; i++)
