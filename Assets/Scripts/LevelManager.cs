@@ -98,7 +98,6 @@ public class LevelManager : MonoBehaviour {
 		thePlayer.transform.position = thePlayer.respawnPosition;
 		thePlayer.isJumping = false;
 		thePlayer.isCrouching = false;
-		thePlayer.isKnockbacked = false;
 		thePlayer.transform.localScale = new Vector2 (1f, 1f);
 		thePlayer.gameObject.SetActive (true);
 		respawning = false;
@@ -133,7 +132,10 @@ public class LevelManager : MonoBehaviour {
 		{
 			healthCount -= damageToTake;
 			UpdateHeartMeter();
-			thePlayer.Knockback();
+			if (healthCount > 0)
+			{
+				thePlayer.Knockback();
+			}
 		}
 	}
 
