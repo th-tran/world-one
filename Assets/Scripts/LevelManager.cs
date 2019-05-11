@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour {
 	private int coinBonusLifeCount;
 	public int bonusLifeThreshold;
 	public Text coinText;
+	public AudioSource coinSound;
 
 	// Health UI
 	public Image heart1, heart2, heart3;
@@ -148,12 +149,14 @@ public class LevelManager : MonoBehaviour {
 		coinCount += coinsToAdd;
 		coinBonusLifeCount += coinsToAdd;
 		coinText.text = "X " + coinCount;
+		coinSound.Play();
 	}
 
 	public void AddLives (int livesToAdd) {
 		// Update lives count and UI
 		currentLives += livesToAdd;
 		livesText.text = "X " + currentLives;
+		coinSound.Play();
 	}
 
 	public void HurtPlayer (int damageToTake) {
@@ -165,6 +168,7 @@ public class LevelManager : MonoBehaviour {
 			if (healthCount > 0)
 			{
 				thePlayer.Knockback();
+				thePlayer.hurtSound.Play();
 			}
 		}
 	}
@@ -177,6 +181,7 @@ public class LevelManager : MonoBehaviour {
 			healthCount = maxHealth;
 		}
 		UpdateHeartMeter();
+		coinSound.Play();
 	}
 
 	public void UpdateHeartMeter () {

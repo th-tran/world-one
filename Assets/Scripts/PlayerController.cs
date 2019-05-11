@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour {
 
 	// Player sound effects
 	public AudioSource jumpSound;
+	public AudioSource hurtSound;
 
 	void Start () {
 		// Get player components
