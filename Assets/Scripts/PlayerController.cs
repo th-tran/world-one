@@ -35,6 +35,8 @@ public class PlayerController : MonoBehaviour {
 
 	private LevelManager theLevelManager;
 
+	public GameObject stompBox;
+
 	void Start () {
 		// Get the rigidbody and animator of player
 		myRigidbody = GetComponent<Rigidbody2D>();
@@ -90,6 +92,13 @@ public class PlayerController : MonoBehaviour {
 		if (Input.GetButtonUp ("Jump")) 
 		{
 			isJumping = false;
+		}
+
+		if (myRigidbody.velocity.y < 0)
+		{
+			stompBox.SetActive (true);
+		} else {
+			stompBox.SetActive (false);
 		}
 
 		// Check if player is crouching
