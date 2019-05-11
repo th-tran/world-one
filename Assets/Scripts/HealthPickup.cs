@@ -4,20 +4,19 @@ using UnityEngine;
 
 public class HealthPickup : MonoBehaviour {
 
-	public int healthToGive;
-
 	private LevelManager theLevelManager;
+	public int healthToGive;
 
 	void Start () {
 		theLevelManager = FindObjectOfType<LevelManager>();
 	}
 	
-	void OnTriggerEnter2D (Collider2D other)
-	{
+	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player")
 		{
+			// Pick up health
 			theLevelManager.GiveHealth (healthToGive);
+			gameObject.SetActive (false);
 		}
-		gameObject.SetActive (false);
 	}
 }

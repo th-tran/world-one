@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class StompEnemy : MonoBehaviour {
 
+	// Rigidbody of player
 	private Rigidbody2D playerRigidbody;
 
-	public GameObject deathSplosion;
+	// Controls bounce
 	public float bounceForce;
 
 	void Start () {
@@ -16,9 +17,9 @@ public class StompEnemy : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Enemy")
 		{
-			//Destroy (other.gameObject);
+			// One-shot enemies for now
 			other.gameObject.SetActive (false);
-			//Instantiate (deathSplosion, other.transform.position, other.transform.rotation);
+			// Player bounces off enemy
 			playerRigidbody.velocity = new Vector2 (playerRigidbody.velocity.x, bounceForce);
 		}
 	}

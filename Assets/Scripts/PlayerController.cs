@@ -33,19 +33,24 @@ public class PlayerController : MonoBehaviour {
 	// Player respawns here after death
 	public Vector2 respawnPosition;
 
+	// Obligatory level manager
 	private LevelManager theLevelManager;
 
+	// The hitbox to bounce off enemies
 	public GameObject stompBox;
 
+	// Controls knockback behaviour
 	public float knockbackForce;
 	public float knockbackLength;
 	private float knockbackCounter;
+	public bool isKnockbacked;
 
+	// Controls invincibility behaviour
 	public float invincibilityLength;
 	private float invincibilityCounter;
 
 	void Start () {
-		// Get the rigidbody and animator of player
+		// Get player components
 		myRigidbody = GetComponent<Rigidbody2D>();
 		myBoxCollider = GetComponent<BoxCollider2D>();
 		myAnim = GetComponent<Animator>();
@@ -55,9 +60,6 @@ public class PlayerController : MonoBehaviour {
 
 		// Get reference to level manager
 		theLevelManager = FindObjectOfType<LevelManager>();
-
-		isJumping = false;
-		isCrouching = false;
 	}
 	
 	void Update () {
@@ -108,6 +110,7 @@ public class PlayerController : MonoBehaviour {
 			downPressed = (Input.GetButton ("Vertical") && (Input.GetAxisRaw ("Vertical") < 0f));
 			if (downPressed)
 			{
+				// Player is crouching
 				isCrouching = true;
 				if (isGrounded)
 				{
@@ -115,11 +118,13 @@ public class PlayerController : MonoBehaviour {
 				}
 				ResizePlayer(0.7f);
 			} else {
+				// Player is not crouching
 				isCrouching = false;
 				ResizePlayer(0.9f);
 			}
 		}
 
+		// Player is knocked back until counter reaches 0
 		if (knockbackCounter > 0)
 		{
 			knockbackCounter -= Time.deltaTime;
@@ -130,17 +135,22 @@ public class PlayerController : MonoBehaviour {
 				myRigidbody.velocity = new Vector2 (knockbackForce, knockbackForce);
 			}
 		}
+		if (knockbackCounter <= 0)
+		{
+			isKnockbacked = false;
+		}
 
+		// Player is invincible until counter reaches 0
 		if (invincibilityCounter > 0)
 		{
 			invincibilityCounter -= Time.deltaTime;
 		}
-
 		if (invincibilityCounter <= 0)
 		{
 			theLevelManager.invincible = false;
 		}
 
+		// Enable hitbox to bounce off enemies only if player is falling
 		if (myRigidbody.velocity.y < 0)
 		{
 			stompBox.SetActive (true);
@@ -152,6 +162,7 @@ public class PlayerController : MonoBehaviour {
 		myAnim.SetFloat ("Speed", Mathf.Abs (myRigidbody.velocity.x));
 		myAnim.SetBool ("Grounded", isGrounded);
 		myAnim.SetBool ("Crouching", isCrouching);
+		myAnim.SetBool ("Knockbacked", isKnockbacked);
 	}
 
 	void ResizePlayer (float newY) {
@@ -163,6 +174,7 @@ public class PlayerController : MonoBehaviour {
 	public void Knockback () {
 		knockbackCounter = knockbackLength;
 		invincibilityCounter = invincibilityLength;
+		isKnockbacked = true;
 		theLevelManager.invincible = true;
 	}
 

@@ -18,6 +18,8 @@ public class Gem : MonoBehaviour {
 			Instantiate (gemBurst, transform.position, transform.rotation);
 		}
 		gameObject.SetActive (false);
+
+		// Placeholder wincon
 		theLevelManager.levelCompleteScreen.SetActive (true);
 		GameObject player = GameObject.Find("Player");
 		player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;

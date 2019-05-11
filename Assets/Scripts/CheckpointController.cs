@@ -6,22 +6,18 @@ public class CheckpointController : MonoBehaviour {
 	// Controls checkpoint animations
 	private Animator checkpointAnim;
 	private CircleCollider2D checkpointCollider;
-	public bool checkpointActive;
 
 	void Start () {
+		// Get checkpoint components and set to false
 		checkpointAnim = GetComponent<Animator>();
 		checkpointCollider = GetComponent<CircleCollider2D>();
-		checkpointActive = false;
-	}
-
-	void Update () {
-		checkpointAnim.SetBool ("Active", checkpointActive);
 	}
 
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player")
 		{
-			checkpointActive = true;
+			// Activate checkpoint and disable further interaction
+			checkpointAnim.SetBool ("Active", true);
 			checkpointCollider.enabled = false;
 		}
 	}

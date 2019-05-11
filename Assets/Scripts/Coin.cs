@@ -5,7 +5,6 @@ using UnityEngine;
 public class Coin : MonoBehaviour {
 
 	private LevelManager theLevelManager;
-	
 	public int coinValue;
 
 	void Start () {
@@ -16,8 +15,8 @@ public class Coin : MonoBehaviour {
 	{
 		if (other.tag == "Player")
 		{
+			// Pick up coin
 			theLevelManager.AddCoins (coinValue);
-			//Destroy (gameObject);
 			gameObject.SetActive (false);
 		}
 	}

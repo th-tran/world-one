@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+	// Controls the target object that the camera will follow
 	public GameObject target;
 	private Vector3 targetPosition;
+	
+	// Controls camera follow behaviour
 	public float followAhead;
 	public float smoothing;
 

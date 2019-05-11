@@ -5,29 +5,36 @@ using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
+	// Controls player behaviour
 	public PlayerController thePlayer;
 	public GameObject deathSplosion;
 	public float waitForRespawn;
 
+	// Controls coin behaviour
 	public int coinCount;
 	public Text coinText;
 
+	// Health UI
 	public Image heart1, heart2, heart3;
 	public Sprite heartFull, heartHalf, heartEmpty;
 	
+	// Controls health behaviour
 	public int maxHealth;
 	public int healthCount;
 
+	// Controls player states
+	public bool invincible;
 	private bool respawning;
 
+	// All objects to reset on respawn
 	public ResetOnRespawn[] objectsToReset;
 
-	public bool invincible;
-
+	// Controls lives behaviour
 	public int startingLives;
 	public int currentLives;
 	public Text livesText;
 
+	// Overlay screens
 	public GameObject gameOverScreen;
 	public GameObject levelCompleteScreen;
 
@@ -50,6 +57,7 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	void Update () {
+		// Check if player is dead
 		if (healthCount <= 0 && !respawning)
 		{
 			Respawn();
@@ -90,6 +98,7 @@ public class LevelManager : MonoBehaviour {
 		thePlayer.transform.position = thePlayer.respawnPosition;
 		thePlayer.isJumping = false;
 		thePlayer.isCrouching = false;
+		thePlayer.isKnockbacked = false;
 		thePlayer.transform.localScale = new Vector2 (1f, 1f);
 		thePlayer.gameObject.SetActive (true);
 		respawning = false;
@@ -107,13 +116,13 @@ public class LevelManager : MonoBehaviour {
 	}
 
 	public void AddCoins (int coinsToAdd) {
-		// Update coin count
+		// Update coin count and UI
 		coinCount += coinsToAdd;
-		// Update coin UI
 		coinText.text = "X " + coinCount;
 	}
 
 	public void AddLives (int livesToAdd) {
+		// Update lives count and UI
 		currentLives += livesToAdd;
 		livesText.text = "X " + currentLives;
 	}
@@ -132,12 +141,14 @@ public class LevelManager : MonoBehaviour {
 		healthCount += healthToGive;
 		if (healthCount > maxHealth)
 		{
+			// Setting health cap for now
 			healthCount = maxHealth;
 		}
 		UpdateHeartMeter();
 	}
 
 	public void UpdateHeartMeter () {
+		// Updates the health UI based on health count
 		switch (healthCount)
 		{
 			case 6: heart1.sprite = heart2.sprite = heart3.sprite = heartFull;

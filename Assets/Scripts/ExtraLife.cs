@@ -4,9 +4,8 @@ using UnityEngine;
 
 public class ExtraLife : MonoBehaviour {
 
-	public int livesToGive;
-
 	private LevelManager theLevelManager;
+	public int livesToGive;
 
 	void Start () {
 		theLevelManager = FindObjectOfType<LevelManager>();
@@ -15,6 +14,7 @@ public class ExtraLife : MonoBehaviour {
 	void OnTriggerEnter2D (Collider2D other) {
 		if (other.tag == "Player")
 		{
+			// Pick up extra life
 			theLevelManager.AddLives (livesToGive);
 			gameObject.SetActive (false);
 		}
