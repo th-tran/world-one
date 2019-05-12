@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class SnailController : MonoBehaviour {
-
-	// Controls the boundaries of snail movement
-	public Transform leftPoint;
-	public Transform rightPoint;
 	
 	// Controls movement
 	public float moveSpeed;
 	public bool movingRight;
+	public Transform groundDetection;
+	private RaycastHit2D groundInfo;
 
 	// Rigidbody of snail
 	private Rigidbody2D myRigidbody;
@@ -20,17 +18,17 @@ public class SnailController : MonoBehaviour {
 	}
 	
 	void Update () {
-		if (movingRight && transform.position.x > rightPoint.position.x)
+		groundInfo = Physics2D.Raycast (groundDetection.position, Vector2.down, 2f);
+		if (!groundInfo.collider)
 		{
-			// Snail was moving right and passed the right point, so turn around
-			movingRight = false;
-			transform.eulerAngles = new Vector3 (0f, 0f, 0f);
-		}
-		if (!movingRight && transform.position.x < leftPoint.position.x)
-		{
-			// Vice versa
-			movingRight = true;
-			transform.eulerAngles = new Vector3 (0f, 180f, 0f);
+			if (movingRight)
+			{
+				transform.eulerAngles = new Vector3 (0f, 0f, 0f);
+				movingRight = false;
+			} else {
+				transform.eulerAngles = new Vector3 (0f, 180f, 0f);
+				movingRight = true;
+			}
 		}
 		if (movingRight)
 		{
